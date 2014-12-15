@@ -205,6 +205,79 @@ void whereToMakeMove(string board[][3], int row, int col, string piece, int &cou
 	return;
 }
 
+bool ifAboutToWin(string board[][3], string piece, int& row, int& col) {
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++) {
+			if(board[i][j] == piece) {
+				if(board[i][j] == board[i][j-1]){
+					if(board[i][j+1] == " "){
+						row = i;
+						col = j+1;
+						return true;
+					}
+				}
+				
+				if(board[i][j] == board[i][j+1]){
+					if(board[i][j-1] == " "){
+						row = i;
+						col = j-1;
+						return true;
+					}
+				}
+				
+				if(board[i][j] == board[i-1][j]){
+					if(board[i+1][j] == " "){
+						row = i+1;
+						col = j;
+						return true;
+					}
+				}
+				
+				if(board[i][j] == board[i+1][j]){
+					if(board[i-1][j] == " "){
+						row = i-1;
+						col = j;
+						return true;
+					}
+				}
+				
+				if(board[i][j] == board[i-1][j-1]){
+					if(board[i+1][j+1] == " "){
+						row = i+1;
+						col = j+1;
+						return true;
+					}
+				}
+				
+				if(board[i][j] == board[i-1][j+1]){
+					if(board[i+1][j-1] == " "){
+						row = i+1;
+						col = j-1;
+						return true;
+					}
+				}
+				
+				if(board[i][j] == board[i+1][j-1]){
+					if(board[i-1][j+1] == " "){
+						row = i-1;
+						col = j+1;
+						return true;
+					}
+				}
+				
+				if(board[i][j] == board[i+1][j+1]){
+					if(board[i-1][j-1] == " "){
+						row = i-1;
+						col = j-1;
+						return true;
+					}
+				}			
+			}
+		}
+	}
+	return false;
+}
+
 void duplicateBoard(string board[][3], string duplicate[][3]) {
 	for(int i=0; i<=2; i++){
 		for(int j=0; j<=2; j++){
@@ -215,81 +288,84 @@ void duplicateBoard(string board[][3], string duplicate[][3]) {
 }
 
 void computerMove(string board[][3]) {
-	int count = 0;
-	int wins[3][3];
-	for(int i=0; i<=2; i++){
-		for(int j=0; j<=2; j++){
-			wins[i][j] = 0;
-		}
-	}
-	string duplicate[3][3];
-	duplicateBoard(board, duplicate);
-	
-	if(duplicate[0][0] == " "){
-		whereToMakeMove(duplicate, 0, 0, "o", count);
-		wins[0][0] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
-	if(duplicate[0][1] == " "){
-		whereToMakeMove(duplicate, 0, 1, "o", count);
-		wins[0][1] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
-	if(duplicate[0][2] == " "){
-		whereToMakeMove(duplicate, 0, 2, "o", count);
-		wins[0][2] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
-	if(duplicate[1][0] == " "){
-		whereToMakeMove(duplicate, 1, 0, "o", count);
-		wins[1][0] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
-	if(duplicate[1][1] == " "){
-		whereToMakeMove(duplicate, 1, 1, "o", count);
-		wins[1][1] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
-	if(duplicate[1][2] == " "){
-		whereToMakeMove(duplicate, 1, 2, "o", count);
-		wins[1][2] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
-	if(duplicate[2][0] == " "){
-		whereToMakeMove(duplicate, 2, 0, "o", count);
-		wins[2][0] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
-	if(duplicate[2][1] == " "){
-		whereToMakeMove(duplicate, 2, 1, "o", count);
-		wins[2][1] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
-	if(duplicate[2][2] == " "){
-		whereToMakeMove(duplicate, 2, 2, "o", count);
-		wins[2][2] = count;
-		count = 0;
-		duplicateBoard(board, duplicate);
-	}
 	int row, col;
-	int highest = -1;
-	for(int i=0; i<3; i++){
-		for(int j=0; j<3; j++){
-			if(wins[i][j] > highest){
-				highest = wins[i][j];
-				row=i;
-				col=j;
+	if (!ifAboutToWin(board, "x", row, col)){
+		int count = 0;
+		int wins[3][3];
+		for(int i=0; i<=2; i++){
+			for(int j=0; j<=2; j++){
+				wins[i][j] = 0;
 			}
 		}
-	}
+		string duplicate[3][3];
+		duplicateBoard(board, duplicate);
+		
+		if(duplicate[0][0] == " "){
+			whereToMakeMove(duplicate, 0, 0, "o", count);
+			wins[0][0] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+		if(duplicate[0][1] == " "){
+			whereToMakeMove(duplicate, 0, 1, "o", count);
+			wins[0][1] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+		if(duplicate[0][2] == " "){
+			whereToMakeMove(duplicate, 0, 2, "o", count);
+			wins[0][2] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+		if(duplicate[1][0] == " "){
+			whereToMakeMove(duplicate, 1, 0, "o", count);
+			wins[1][0] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+		if(duplicate[1][1] == " "){
+			whereToMakeMove(duplicate, 1, 1, "o", count);
+			wins[1][1] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+		if(duplicate[1][2] == " "){
+			whereToMakeMove(duplicate, 1, 2, "o", count);
+			wins[1][2] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+		if(duplicate[2][0] == " "){
+			whereToMakeMove(duplicate, 2, 0, "o", count);
+			wins[2][0] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+		if(duplicate[2][1] == " "){
+			whereToMakeMove(duplicate, 2, 1, "o", count);
+			wins[2][1] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+		if(duplicate[2][2] == " "){
+			whereToMakeMove(duplicate, 2, 2, "o", count);
+			wins[2][2] = count;
+			count = 0;
+			duplicateBoard(board, duplicate);
+		}
+
+		int highest = -1;
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++){
+				if(wins[i][j] > highest){
+					highest = wins[i][j];
+					row=i;
+					col=j;
+				}
+			}
+		}	
+	}	
 	board[row][col] = "o";
 }
 
@@ -322,7 +398,7 @@ int main() {
 		cout << " [2][0] | [2][1] | [2][2] " << endl;
 		cout << "        |        |        " << endl;
 		createBoard(board);
-		
+
 		while(full == false){
 			makeAMove(board);
 			createBoard(board);
