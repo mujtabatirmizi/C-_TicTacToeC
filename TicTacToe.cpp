@@ -209,69 +209,85 @@ bool ifAboutToWin(string board[][3], string piece, int& row, int& col) {
 	for(int i=0; i<3; i++){
 		for(int j=0; j<3; j++) {
 			if(board[i][j] == piece) {
-				if(board[i][j] == board[i][j-1]){
-					if(board[i][j+1] == " "){
-						row = i;
-						col = j+1;
-						return true;
+				if(j-1>=0) {
+					if(board[i][j] == board[i][j-1]){
+						if(board[i][j+1] == " " && j+1<3){
+							row = i;
+							col = j+1;
+							return true;
+						}
 					}
 				}
 				
-				if(board[i][j] == board[i][j+1]){
-					if(board[i][j-1] == " "){
-						row = i;
-						col = j-1;
-						return true;
+				if(j+1<3) {
+					if(board[i][j] == board[i][j+1] ){
+						if(board[i][j-1] == " " && j-1>=0){
+							row = i;
+							col = j-1;
+							return true;
+						}
 					}
 				}
 				
-				if(board[i][j] == board[i-1][j]){
-					if(board[i+1][j] == " "){
-						row = i+1;
-						col = j;
-						return true;
+				if(i-1>=0) {
+					if(board[i][j] == board[i-1][j]){
+						if(board[i+1][j] == " " && i+1<3){
+							row = i+1;
+							col = j;
+							return true;
+						}
 					}
 				}
 				
-				if(board[i][j] == board[i+1][j]){
-					if(board[i-1][j] == " "){
-						row = i-1;
-						col = j;
-						return true;
+				if(i+1<3) {
+					if(board[i][j] == board[i+1][j]){
+						if(board[i-1][j] == " " && i-1>=0){
+							row = i-1;
+							col = j;
+							return true;
+						}
 					}
 				}
 				
-				if(board[i][j] == board[i-1][j-1]){
-					if(board[i+1][j+1] == " "){
-						row = i+1;
-						col = j+1;
-						return true;
+				if(i-1>=0 && j-1>=0) {
+					if(board[i][j] == board[i-1][j-1]){
+						if(board[i+1][j+1] == " " && i+1<3 && j+1<3){
+							row = i+1;
+							col = j+1;
+							return true;
+						}
 					}
 				}
 				
-				if(board[i][j] == board[i-1][j+1]){
-					if(board[i+1][j-1] == " "){
-						row = i+1;
-						col = j-1;
-						return true;
+				if(i-1>=0 && j+1<3) {	
+					if(board[i][j] == board[i-1][j+1]){
+						if(board[i+1][j-1] == " " && j-1>=0 && i+1<3){
+							row = i+1;
+							col = j-1;
+							return true;
+						}
 					}
 				}
 				
-				if(board[i][j] == board[i+1][j-1]){
-					if(board[i-1][j+1] == " "){
-						row = i-1;
-						col = j+1;
-						return true;
+				if(j-1>=0 && i+1<3) {
+					if(board[i][j] == board[i+1][j-1]){
+						if(board[i-1][j+1] == " " && i-1>=0 && j+1<3){
+							row = i-1;
+							col = j+1;
+							return true;
+						}
 					}
 				}
 				
-				if(board[i][j] == board[i+1][j+1]){
-					if(board[i-1][j-1] == " "){
-						row = i-1;
-						col = j-1;
-						return true;
-					}
-				}			
+				if(i+1<3 && j+1<3) {	
+					if(board[i][j] == board[i+1][j+1]){
+						if(board[i-1][j-1] == " " && i-1>=0 && j-1>=0){
+							row = i-1;
+							col = j-1;
+							return true;
+						}
+					}	
+				}
 			}
 		}
 	}
